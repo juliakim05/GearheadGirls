@@ -18,11 +18,27 @@
     --new-white: #E8E8E8;
 }
 
-body {
-    color: var(--new-black);
-    background-color: var(--new-white);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Alinha horizontalmente */
+    align-items: center;    /* Alinha verticalmente */
+    background-color: purple;
+  }
+
+  .pontuacaoEJogo {
+    width: 300px;
+    height: 200px;
+    background-color: rgb(137, 48, 137);
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .btnIniciarQuiz {
+    width: 100%;
+    height: 100%;
+  }
 
 button {
     font-family: monospace;
