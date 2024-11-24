@@ -14,12 +14,11 @@ button {
 body {
   /* background-color: blueviolet; */
   background: linear-gradient(90deg, rgba(91,30,159,1) 0%, rgb(147, 24, 151) 100%);
-
   color: aliceblue;
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .container {
@@ -30,5 +29,82 @@ body {
   border: 2px solid blue;
   border-radius: 6px;
   padding: 16px;
-  box-shadow: 0 0 2px 2px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+}
+
+.questions-container {
+  width: 100%;
+  display: flex;
+  flex-direction: columnn;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.question {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.answers-container {
+  width: 100%;
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.next-question {
+  margin-top: 32px;
+}
+
+.button {
+  background-color: blueviolet;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: 0;
+  border-radius: 6px;
+  height: 48px;
+  padding: 0 32px; /*0 em cima e baixo e 32 na esquerda e direita*/
+
+  transition: filter 0.2s;
+}
+
+.button:not(:disabled):hover{ /*botoes que não estejam disabled tenham hover*/
+  filter: brightness(0.8);
+}
+
+.answer:disabled {
+  cursor: not-allowed;
+}
+
+.final-message{
+  font-size: 20px;
+  text-align: center;
+
+}
+
+.final-message span {
+  display: block;
+  margin-top: 8px;
+}
+
+.hide {
+  display: none;
+}
+
+.correct {
+  background-color: green;
+}
+
+.incorrect {
+  background-color: red;
+
 }
