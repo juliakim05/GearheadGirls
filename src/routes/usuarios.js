@@ -12,4 +12,8 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+router.post("/pontuar/:id", function (req, res) {
+    usuarioController.pontuar(req, res);
+});
+
 module.exports = router;

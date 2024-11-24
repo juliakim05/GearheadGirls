@@ -11,7 +11,7 @@ $startGameButton.addEventListener("click", startGame) //captura o evento de cliq
 $nextQuestionButton.addEventListener("click", displayNextQuestion) //quando o usuario clicar no botao proxima pergunta, vai pra proxima da lista de questions
 
 let currentQuestionQuiz = 0
-let totalCorrect = 0
+var totalAcerto = 0
 
 function startGame() {
     $startGameButton.classList.add("hide") //adicionando class
@@ -26,6 +26,7 @@ function displayNextQuestion() {
    if (questions.length == currentQuestionQuiz) { //verificando o tamanho da questao é igual a pergunta atual
    return finishGame();
    }
+
 
 
     $questionText.textContent = questions[currentQuestionQuiz].question
@@ -56,11 +57,10 @@ function resetState() {
 
 //verificando se a resposta é certa e dando estilização de cor
 function selectAnswer(event) {
-    console.log ('event.target') //vendo o que retorna
 const answerClicked = event.target
 
 if (answerClicked.dataset.correct) {
-    totalCorrect++
+    totalAcerto++
 }
 
 document.querySelectorAll(".answer").forEach(button => {
@@ -77,9 +77,11 @@ $nextQuestionButton.classList.remove("hide")
 currentQuestionQuiz++
 }
 
+var ctx = document.getElementById('myChart1')
+
 function finishGame() {
     const totalQuestion = questions.length
-    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
+    const performance = Math.floor(totalAcerto * 100 / totalQuestion)
 
     let message = ""
 
@@ -99,17 +101,93 @@ function finishGame() {
 
     $questionsContainer.innerHTML = 
     `
-    <p class="final-message>
-        Você acertou ${totalCorrect} de ${totalQuestion} questões!
+  
+    <p class="final-message">
+        Você acertou ${totalAcerto} de ${totalQuestion} questões!
         <span>Resultado: ${message}</span>
     </p>
-    <button onclick=window.location.reload() class="button">
+    
+<button onclick="window.location.reload()" class="button">
     Refazer teste
     </button>
+
+      
     `
+    sessionStorage.TOTAL_ACERTOS = totalAcerto;
+    alert(`${sessionStorage.TOTAL_ACERTOS}`)
+    pontuar();
+
+    div_grafico.style.display = "flex"
+
+new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['certas', 'erradas'],
+        datasets: [{
+            label: '# of Votes',
+            data: [currentQuestionQuiz - totalAcerto, totalAcerto],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    indexAxis: 'y',
+}
+})
 }
 
+var total_erros = currentQuestionQuiz - totalAcerto;
+var total_pontos = sessionStorage.PONTOSQUIZ
 
+
+currentQuestionQuiz = 0
+totalAcerto = 0
+
+
+    
+/*Fim do quiz*/
+
+
+
+   
+
+    function pontuar() {
+        // aguardar();
+    
+        //Recupere o valor da nova input pelo nome do id
+        // Agora vá para o método fetch logo abaixo
+    
+        var pontosVar = totalAcerto;
+        var idVar = sessionStorage.ID_USUARIO;
+    
+        // Enviando o valor da nova input
+        fetch(`/usuarios/pontuar/${idVar}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                idServer: idVar,
+                pontosServer: pontosVar
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+    
+                if (resposta.ok) {
+                    
+                } else {
+                    throw "Houve um erro ao tentar realizar a pontuação!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+    
+        return false;
+    }
 //Math.floor arrendonda
 
 
