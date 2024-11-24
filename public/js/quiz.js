@@ -122,7 +122,7 @@ function finishGame() {
 new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ['certas', 'erradas'],
+        labels: ['erradas', 'certas'],
         datasets: [{
             label: '# of Votes',
             data: [currentQuestionQuiz - totalAcerto, totalAcerto],
