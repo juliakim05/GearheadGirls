@@ -16,4 +16,8 @@ router.post("/pontuar/:id", function (req, res) {
     usuarioController.pontuar(req, res);
 });
 
+router.get("/obterpontuacao/:id", function (req, res) {
+    usuarioController.obterpontuacao(req, res);
+});
+
 module.exports = router;

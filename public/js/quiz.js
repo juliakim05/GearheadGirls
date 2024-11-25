@@ -125,7 +125,7 @@ new Chart(ctx, {
         labels: ['erradas', 'certas'],
         datasets: [{
             label: '# of Votes',
-            data: [currentQuestionQuiz - totalAcerto, totalAcerto],
+            data: [pontosbd],
             borderWidth: 1
         }]
     },
@@ -142,6 +142,8 @@ var total_pontos = sessionStorage.PONTOSQUIZ
 currentQuestionQuiz = 0
 totalAcerto = 0
 
+var pontosbd = 0;
+
 
     
 /*Fim do quiz*/
@@ -150,7 +152,7 @@ totalAcerto = 0
 
    
 
-    function pontuar() {
+async function  pontuar()  {
         // aguardar();
     
         //Recupere o valor da nova input pelo nome do id
@@ -160,7 +162,7 @@ totalAcerto = 0
         var idVar = sessionStorage.ID_USUARIO;
     
         // Enviando o valor da nova input
-        fetch(`/usuarios/pontuar/${idVar}`, {
+       await fetch(`/usuarios/pontuar/${idVar}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -176,7 +178,7 @@ totalAcerto = 0
                 console.log("resposta: ", resposta);
     
                 if (resposta.ok) {
-                    
+                    obterpontuacao(idVar)
                 } else {
                     throw "Houve um erro ao tentar realizar a pontuação!";
                 }
@@ -185,6 +187,35 @@ totalAcerto = 0
                 console.log(`#ERRO: ${resposta}`);
                 // finalizarAguardar();
             });
+    
+        return false;
+    }
+
+    async function obterpontuacao(id) {  // função assincrona
+        // aguardar();
+    
+        var idVar = id;
+    
+        // Enviando o valor da nova input
+        fetch(`/usuarios/obterpontuacao/${idVar}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+    
+            if (resposta.ok) {
+                pontosbd = resposta.response.pontosquiz
+            } else {
+                throw "Houve um erro ao tentar realizar a pontuação!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            // finalizarAguardar();
+        });
     
         return false;
     }
