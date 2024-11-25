@@ -13,6 +13,7 @@ $nextQuestionButton.addEventListener("click", displayNextQuestion) //quando o us
 let currentQuestionQuiz = 0
 var totalAcerto = 0
 
+
 function startGame() {
     $startGameButton.classList.add("hide") //adicionando class
     $questionsContainer.classList.remove("hide") //removendo class
@@ -191,13 +192,13 @@ async function  pontuar()  {
         return false;
     }
 
-    async function obterpontuacao(id) {  // função assincrona
+    async function obterpontuacao() {  // função assincrona
         // aguardar();
     
-        var idVar = id;
+        var id = sessionStorage.ID_USUARIO;
     
         // Enviando o valor da nova input
-        fetch(`/usuarios/obterpontuacao/${idVar}`, {
+        fetch(`/usuarios/obterpontuacao/${id}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

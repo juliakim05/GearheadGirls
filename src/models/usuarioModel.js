@@ -35,7 +35,7 @@ function pontuar(id, pontos) {
 }
 
 function obterpontuacao(id) {
-
+    id = sessionStorage.ID_USUARIO
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql = `
